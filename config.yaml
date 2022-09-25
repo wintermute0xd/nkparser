@@ -1,0 +1,46 @@
+---
+# Main list. Every element is config for site
+sites:
+# Config for nk-online
+- source: Online Нова Каховка
+  # Title block <h1 class="entry-title">Title</h1>
+  title_tag: h1
+  title_attr: class
+  title_attr_name: entry-title
+  # Article block <div class="entry-content">Article</div>
+  article_tag: div
+  article_attr: class
+  article_attr_name: entry-content
+  # Remove tags with next classes
+  adv_blocks:
+  - sfsi_Sicons
+  - post-item-metadata
+  - navigation
+  - panel-grid
+  # Remove next tags
+  tags_to_remove:
+  - script
+  # Main image <div class="post-thumbnail full-width-image"><img class="wp-post-mage"></div>
+  main_img_tag: div
+  main_img_attr: class
+  main_img_attr_name: post-thumbnail
+  main_img_img_class: wp-post-image
+
+- source: Радіо Нова Каховка
+  title_tag: h2
+  title_attr: class
+  title_attr_name: title
+  article_tag: div
+  article_attr: class
+  article_attr_name: resize
+  adv_blocks:
+  - postmeta
+  - navigation
+  tags_to_remove:
+  - script
+  - ins
+  - span
+  main_img_tag: div
+  main_img_attr: class
+  main_img_attr_name: entry
+  main_img_img_class: post_thumbnail

@@ -1,4 +1,5 @@
 import json
+import yaml
 import re
 import requests
 import datetime
@@ -20,9 +21,16 @@ class MyParser:
         headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64)'
                                  ' AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36'}
 
+        # try:
+        #     with open('config.json', 'r', encoding='utf-8') as cfg_file:
+        #         config = json.load(cfg_file)
+        #         config = config['sites'][self.source_rb]
+        # except EnvironmentError as e:
+        #     tk.messagebox.showerror('File open error', 'Can not open config file:  \n\n' + str(e))
+
         try:
-            with open('config.json', 'r', encoding='utf-8') as cfg_file:
-                config = json.load(cfg_file)
+            with open('config.yaml', 'r', encoding='utf-8') as cfg_file:
+                config = yaml.load(cfg_file, Loader=yaml.SafeLoader)
                 config = config['sites'][self.source_rb]
         except EnvironmentError as e:
             tk.messagebox.showerror('File open error', 'Can not open config file:  \n\n' + str(e))

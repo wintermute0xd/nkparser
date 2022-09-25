@@ -106,7 +106,7 @@ class ImageHandler:
                 else:
                     baseheight = baseheight = imgsize
                 # baseheight is x% of orig height
-                hpercent = (baseheight / float(c))
+                hpercent = (baseheight / float(orig_height))
                 # change orig width by x%
                 wsize = (float(orig_width) * float(hpercent))
                 wsize = int(round(wsize, 0))
