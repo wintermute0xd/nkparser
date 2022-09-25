@@ -12,12 +12,13 @@ from ImageHandler import ImageHandler
 
 class MyParser:
 
-    def __init__(self, url, start, source_rb, chbx, imgsize):
+    def __init__(self, url, start, source_rb, chbx, imgsize, m_imgsize):
         self.url = url
         self.start = start
         self.source_rb = source_rb
         self.chbx = chbx
         self.imgsize = imgsize
+        self.m_imgsize = m_imgsize
         headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64)'
                                  ' AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36'}
 
@@ -198,7 +199,7 @@ class MyParser:
         imager = ImageHandler(self.start)
         img_dir = imager.create_img_dir()
         img_names = imager.download_images(img_dir, images_links)
-        imager.img_resizer(img_dir, img_names, self.imgsize)
+        imager.img_resizer(img_dir, img_names, self.imgsize, self.m_imgsize)
 
         prepared_links = self.get_img_links(False, len(images_links))
         return prepared_links

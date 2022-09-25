@@ -19,6 +19,7 @@ class MainWindow:
         self.topframe.pack(side=tk.TOP, fill=tk.X)
         self.bottomframe = tk.Frame(root)
         self.bottomframe.pack(fill=tk.X)
+        
         # topframe
         # start field
         self.start_label = tk.Label(self.topframe, text='Start', width=5, padx=3, pady=5, anchor='w',
@@ -27,18 +28,30 @@ class MainWindow:
         # set default value for start field
         self.def_start_value = tk.StringVar()
         self.def_start_value.set('1')
-        self.start_entry = tk.Entry(self.topframe, width=5, font=('Helvetica', 11), textvariable=self.def_start_value)
+        self.start_entry = tk.Entry(self.topframe, width=3, font=('Helvetica', 11), textvariable=self.def_start_value)
         self.start_entry.grid(row=0, column=1, sticky=tk.W)
         self.start_entry.focus_set()
+
+        # main img size field
+        self.m_imgsize_label = tk.Label(self.topframe, text='Main Img Size:', width=10, anchor='w',
+                                    font=('Helvetica', 11))
+        self.m_imgsize_label.grid(row=0, column=1, sticky=tk.W, padx=(35, 0))
+        # set default value for main img size field
+        self.def_m_imgsize_value = tk.StringVar()
+        self.def_m_imgsize_value.set('500')
+        self.m_imgsize_entry = tk.Entry(self.topframe, width=5, font=('Helvetica', 11), textvariable=self.def_m_imgsize_value)
+        self.m_imgsize_entry.grid(row=0, column=1, sticky=tk.W, padx=(135,0))
+
         # img size field
-        self.imgsize_label = tk.Label(self.topframe, text='Img Size', width=8, anchor='w',
-                                    font=('Helvetica', 12))
-        self.imgsize_label.grid(row=0, column=1, sticky=tk.W, padx=(80, 0))
+        self.imgsize_label = tk.Label(self.topframe, text='Img Size:', width=8, anchor='w',
+                                    font=('Helvetica', 11))
+        self.imgsize_label.grid(row=0, column=1, sticky=tk.W, padx=(190, 0))
         # set default value for img size field
         self.def_imgsize_value = tk.StringVar()
         self.def_imgsize_value.set('800')
-        self.imgsize_entry = tk.Entry(self.topframe, width=7, font=('Helvetica', 11), textvariable=self.def_imgsize_value)
-        self.imgsize_entry.grid(row=0, column=1, sticky=tk.W, padx=(150,0))
+        self.imgsize_entry = tk.Entry(self.topframe, width=5, font=('Helvetica', 11), textvariable=self.def_imgsize_value)
+        self.imgsize_entry.grid(row=0, column=1, sticky=tk.W, padx=(255,0))
+
         # radiobutton
         self.source_rb_var = tk.IntVar()
         self.source_rb_var.set(0)
@@ -48,6 +61,7 @@ class MainWindow:
         # self.source_rb_rad = tk.Radiobutton(self.topframe, text='radio', variable=self.source_rb_var, value=1,
         #                                     font=('Helvetica', 12))
         # self.source_rb_rad.grid(row=0, column=1, sticky=tk.W, padx=(170, 0))
+
         # newsite checkbox
         self.chbx_var = tk.IntVar()
         self.chbx_new = tk.Checkbutton(self.topframe, text='New', variable=self.chbx_var, onvalue=1, offvalue=0,
@@ -72,6 +86,7 @@ class MainWindow:
         self.title_label.grid(row=0, column=0, sticky=tk.W)
         self.title_text_field = tk.Text(self.bottomframe, wrap=tk.WORD, height=3, width=73, font=('Helvetica', 11))
         self.title_text_field.grid(row=0, column=1, sticky=tk.W)
+
         # Main textfield with scrollbars
         self.main_text_label = tk.Label(self.bottomframe, text='Text', width=5, padx=3, anchor='w',
                                         font=('Helvetica', 12))
@@ -127,6 +142,16 @@ class MainWindow:
             tk.messagebox.showerror('Value Error', str(e))
             # dirty hack to make program stop
             raise Exception
+
+        try:
+            m_imgsize_value = int(self.m_imgsize_entry.get())
+            assert(m_imgsize_value >= 0), '"Main Img Size" must be >= 0'
+        except ValueError as e:
+            tk.messagebox.showerror('Value Error', str(e)+'\n\n"Main Img Size" must be a number')
+        except AssertionError as e:
+            tk.messagebox.showerror('Value Error', str(e))
+            raise Exception
+
         try:
             imgsize_value = int(self.imgsize_entry.get())
             assert(imgsize_value >= 0), '"Img Size" must be >= 0'
@@ -135,10 +160,11 @@ class MainWindow:
         except AssertionError as e:
             tk.messagebox.showerror('Value Error', str(e))
             raise Exception
+
         url_value = self.url_entry.get()
         source_rb_value = self.source_rb_var.get()
         chbx_value = self.chbx_var.get()
-        parser = MyParser(url_value, start_value, source_rb_value, chbx_value, imgsize_value)
+        parser = MyParser(url_value, start_value, source_rb_value, chbx_value, imgsize_value, m_imgsize_value)
 
         title = parser.get_title()
         article = parser.get_article()

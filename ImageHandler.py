@@ -58,7 +58,7 @@ class ImageHandler:
 
     # open downloaded images and resize them to 800xN
     # 1st arg is dir w/ images, 2nd arg is list of images' names
-    def img_resizer(self, img_dir, img_names, imgsize):
+    def img_resizer(self, img_dir, img_names, imgsize, m_imgsize):
 
         # create announcement image (always first on page so in list)
         try:
@@ -70,11 +70,14 @@ class ImageHandler:
         # img name (w/o extension) always 22 chars. Insert '-' in the end of the name to mark anno image
         main_img_name = main_img_name[:22] + '-' + main_img_name[22:]
 
-        basewidth = 250
-        wpercent = (basewidth / float(anno_img.size[0]))
-        hsize = (float(anno_img.size[1]) * float(wpercent))
-        hsize = int(round(hsize, 0))
-        anno_img = anno_img.resize((basewidth, hsize), Image.ANTIALIAS)
+        # if size !=0, do resize
+        # for announce img resize only by width
+        if m_imgsize != 0:
+            basewidth = m_imgsize
+            wpercent = (basewidth / float(anno_img.size[0])) # [0] is width [1] is height
+            hsize = (float(anno_img.size[1]) * float(wpercent))
+            hsize = int(round(hsize, 0))
+            anno_img = anno_img.resize((basewidth, hsize), Image.ANTIALIAS)
         anno_img.save(img_dir + '/' + main_img_name)
 
         # resize images
