@@ -1,8 +1,0 @@
-.gitignore
-/__pycache__
-/downloads
-nkparser.ico
-nkparser_main.spec
-config.json
-/build
-/dist
